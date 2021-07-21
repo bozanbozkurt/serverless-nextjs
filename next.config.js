@@ -1,45 +1,22 @@
-const {ESBuildMinifyPlugin} = require('esbuild-loader');
-
-function useEsbuildLoader(webpack, config, options) {
-    const loader = config.module.rules.find((rule) => rule.test && rule.test.test('.ts'));
-
-    if (loader) {
-        loader.use.loader = 'esbuild-loader';
-        loader.use.options = options;
-        config.plugins.push(
-            new webpack.ProvidePlugin({
-                React: 'react',
-            }),
-        );
-    }
+module.exports = function(...args) {
+  let original = require('./next.config.original.1626901847114.js');
+  const finalConfig = {};
+  const target = { target: 'serverless' };
+  if (typeof original === 'function' && original.constructor.name === 'AsyncFunction') {
+    // AsyncFunctions will become promises
+    original = original(...args);
+  }
+  if (original instanceof Promise) {
+    // Special case for promises, as it's currently not supported
+    // and will just error later on
+    return original
+      .then((originalConfig) => Object.assign(finalConfig, originalConfig))
+      .then((config) => Object.assign(config, target));
+  } else if (typeof original === 'function') {
+    Object.assign(finalConfig, original(...args));
+  } else if (typeof original === 'object') {
+    Object.assign(finalConfig, original);
+  }
+  Object.assign(finalConfig, target);
+  return finalConfig;
 }
-
-function minifyWithEsbuild(config, target) {
-    config.optimization = {
-        minimizer: [new ESBuildMinifyPlugin({target})],
-        minimize: true,
-    };
-}
-
-module.exports = {
-    future: {
-        webpack5: false, // TODO binary not found
-    },
-    webpack: (config, {webpack, dev, isServer}) => {
-        useEsbuildLoader(webpack, config, {
-            loader: 'tsx',
-            target: 'es2015',
-        });
-
-        if (!dev) {
-            minifyWithEsbuild(config, 'es2015');
-        }
-
-        if (isServer) {
-            config.externals.push('_http_common');
-        }
-
-        return config;
-    },
-    target: 'serverless',
-};
