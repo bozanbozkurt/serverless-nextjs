@@ -1,22 +1,24 @@
 # serverless.yml
 
 yourProjectName:
-  component: "@sls-next/serverless-component@1.19.0"
+  component: "@sls-next/serverless-component@3.1.0"
   inputs:
     minifyHandlers: true
     build:
       postBuildCommands:
         - PDIR=node_modules/.prisma/client/;
           LDIR=.serverless_nextjs/api-lambda/;
+          TDIR=node_modules/.prisma/client/;
           if [ "$(ls -A $LDIR)" ]; then
-            mkdir -p $LDIR$PDIR;
-            cp "$PDIR"query-engine-rhel-* $LDIR$PDIR;
-            cp "$PDIR"schema.prisma $LDIR$PDIR;
+          mkdir -p $LDIR$TDIR;
+          cp "$PDIR"query-engine-rhel-* $LDIR$TDIR;
+          cp "$PDIR"schema.prisma $LDIR$TDIR;
           fi;
         - PDIR=node_modules/.prisma/client/;
           LDIR=.serverless_nextjs/default-lambda/;
-            if [ "$(ls -A $LDIR)" ]; then
-              mkdir -p $LDIR$PDIR;
-              cp "$PDIR"query-engine-rhel-* $LDIR$PDIR;
-              cp "$PDIR"schema.prisma $LDIR$PDIR;
+          TDIR=node_modules/.prisma/client/;
+          if [ "$(ls -A $LDIR)" ]; then
+          mkdir -p $LDIR$TDIR;
+          cp "$PDIR"query-engine-rhel-* $LDIR$TDIR;
+          cp "$PDIR"schema.prisma $LDIR$TDIR;
           fi;
