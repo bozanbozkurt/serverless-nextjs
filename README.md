@@ -1,4 +1,4 @@
-# Prisma + Next.js + Serverless-Next.js AWS Component 
+# Prisma + Next.js + Serverless-Next.js AWS Component
 
 Sample project to deploy a simple [Next.js](https://nextjs.org/) application
 with [Prisma](https://www.prisma.io/) to [Amazon Web
@@ -21,7 +21,7 @@ change that, head to the `schema.prisma` and change it.
 
 ### Connect
 
-At the root of this project, next to your `package.json`,  create an `.env`
+At the root of this project, next to your `package.json`, create an `.env`
 file. Insert your database environment variables, they will automatically get
 deployed. Do not commit this file.
 
@@ -32,11 +32,12 @@ DATABASE_URL=postgres://user:password@host:port/db_name
 ## Deploy
 
 ```
-npm run deploy
+yarn install
+yarn run deploy
 ```
 
 ## Hot reload
 
 ```
-npm run dev
+yarn run dev
 ```
