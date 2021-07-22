@@ -1,5 +1,7 @@
 # Prisma + Next.js + Serverless-Next.js AWS Component
 
+# Generated from [millsp/prisma-serverless-nextjs](https://github.com/millsp/prisma-serverless-nextjs)
+
 Sample project to deploy a simple [Next.js](https://nextjs.org/) application
 with [Prisma](https://www.prisma.io/) to [Amazon Web
 Services](https://aws.amazon.com/) using the [Serverless Next.js
